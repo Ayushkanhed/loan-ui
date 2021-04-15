@@ -7,12 +7,12 @@ function Upload(props) {
             <Grid container direction="row"
                 justify="flex-start"
                 alignItems="center">
-
-                <Grid item>
-                    <Button variant="contained" color="primary"> Upload</Button>
+                <Grid item xs={4}>
+                    <Typography variant="p" >{props.desc}</Typography>
                 </Grid>
-                <Grid item>
-                    <Typography variant="p" align="left">{props.desc}</Typography>
+
+                <Grid item xs={8}>
+                    <Button variant="contained" color="primary"> Upload</Button>
                 </Grid>
             </Grid>
 
