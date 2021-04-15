@@ -1,4 +1,4 @@
-import Login from "../Component/Login";
+import Login from "../Pages/Login";
 
 export default function Layout(props) {
     return (

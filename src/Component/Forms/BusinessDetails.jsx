@@ -1,21 +1,14 @@
 // Personal Detail Form
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Button, Container, Grid, Typography } from "@material-ui/core";
-import Navbar from "../Styles/Navbar";
+import { Container, Grid, Typography } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import Upload from './upload'
-import HeaderTitle from './Header'
-
+import HeaderTitle from '../Helpers/Header'
+import useStyles from "../Styles/FormStyle";
 
 const emp = [
     { name: "Job" },
@@ -43,49 +36,34 @@ const job = [
 const jobtitle = [
     { name: "Executive Officer" },
     { name: "Supervisor" },
-    {name: "Worker"},
-    {name: "Other"}
+    { name: "Worker" },
+    { name: "Other" }
 ]
 
 const business = [
     { name: "Owned" },
     { name: "Partnership" },
-    {name: "Other"}
+    { name: "Other" }
 ]
 
-const offdetail=[
+const offdetail = [
     { name: "Owned" },
     { name: "On Rent" }
 ]
 
-const income=[
+const income = [
     { name: "Salary / Business Income" },
     { name: "Other Income" },
     { name: "Income of Son" },
     { name: "Total Annual Income" },
 ]
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            marginTop: theme.spacing(5),
-        },
-        field: {
-            width: "200px"
-        }
-    },
-    headtext: {
-        border: "1px solid blue",
-        padding: 10
-    }
-}));
-
 function BusinessDetails() {
     const classes = useStyles();
     const [bank, setbank] = useState();
     return (
         <>
-            <Container maxWidth={"md"} style={{ border: "1px solid blue", margin: "50px auto" }}>
+            <Container className={classes.containclass} maxWidth={"md"}>
                 <form className={classes.root} autoComplete="off" style={{ padding: "20px" }}>
 
                     {/* main heading */}
@@ -97,16 +75,15 @@ function BusinessDetails() {
                     </Grid>
                     {/* main heading */}
 
-                    {/* subject */}
+                    {/* Work status */}
                     <HeaderTitle name={"Work Status"} />
                     <Grid container
                         direction="row"
                         justify="flex-start"
                         alignItems="center" spacing={3}>
-
                         <Grid item xs={8}>
                             <FormControl variant="outlined" fullWidth required>
-                                <InputLabel >Select</InputLabel>
+                                <InputLabel>Select</InputLabel>
                                 <Select
                                     required
                                     labelId="demo-simple-select-outlined-label"
@@ -120,23 +97,23 @@ function BusinessDetails() {
                         </Grid>
                         <Grid item xs={4}></Grid>
                     </Grid>
-                    {/* subject end*/}
 
-                    {/* name */}
+
+                    {/* Business Expr */}
                     <HeaderTitle name={"Experience in "} />
                     <Grid container
                         direction="row"
                         justify="flex-start"
                         alignItems="center" spacing={3}>
-
                         <Grid item xs={8}>
-                            <TextField required type="number" color="primary" label="Experience(if busi)" variant="outlined" />
+                            <TextField required type="number" color="primary" label="Experience(if busi)"
+                                variant="outlined" />
                         </Grid>
                         <Grid item xs={4}></Grid>
                     </Grid>
-                    {/* name */}
 
-                    {/* contact detail */}
+
+                    {/* Retirement Job */}
                     <HeaderTitle name={"Time left for Retirement(if job)"} />
                     <Grid container
                         direction="row"
@@ -151,22 +128,19 @@ function BusinessDetails() {
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start">Years</InputAdornment>,
                                 }}
-                                variant="outlined"
-                            />
+                                variant="outlined" />
                         </Grid>
                     </Grid>
-                    {/* contact detail */}
 
-                    {/* Business address */}
+                    {/* Job Details */}
                     <HeaderTitle name={"if job -- JOB Details"} />
                     <Grid container
                         direction="row"
                         justify="flex-start"
                         alignItems="center" spacing={3}>
-
                         <Grid item xs={8}>
                             <FormControl variant="outlined" fullWidth required>
-                                <InputLabel >Job Status</InputLabel>
+                                <InputLabel>Job Status</InputLabel>
                                 <Select
                                     fullWidth
                                     required
@@ -180,27 +154,22 @@ function BusinessDetails() {
                             </FormControl>
                         </Grid>
                         <Grid item xs={4}></Grid>
-
-
                         <Grid item xs={8}>
-                            <TextField fullWidth color="primary" label="Job Location Details" type="string" variant="outlined" />
+                            <TextField fullWidth color="primary" label="Job Location Details" type="string"
+                                variant="outlined" />
                         </Grid>
-
                         <Grid item>
                             <TextField color="primary" label="City" type="string" variant="outlined" />
                         </Grid>
-
-                        <Grid item >
+                        <Grid item>
                             <TextField required color="primary" label="Country" variant="outlined" />
                         </Grid>
-
-                        <Grid item >
+                        <Grid item>
                             <TextField required color="primary" label="Pincode" variant="outlined" />
                         </Grid>
-
                         <Grid item xs={8}>
                             <FormControl variant="outlined" fullWidth required>
-                                <InputLabel >Job Title Status</InputLabel>
+                                <InputLabel>Job Title Status</InputLabel>
                                 <Select
                                     required
                                     fullWidth
@@ -215,16 +184,15 @@ function BusinessDetails() {
                         <Grid item xs={4}></Grid>
                     </Grid>
 
-
+                    {/*Business*/}
                     <HeaderTitle name={"if business-- Business/Industry Details"} />
                     <Grid container
-                          direction="row"
-                          justify="flex-start"
-                          alignItems="center" spacing={3}>
-
+                        direction="row"
+                        justify="flex-start"
+                        alignItems="center" spacing={3}>
                         <Grid item xs={8}>
                             <FormControl variant="outlined" fullWidth required>
-                                <InputLabel >Details of Owenership</InputLabel>
+                                <InputLabel>Details of Owenership</InputLabel>
                                 <Select
                                     fullWidth
                                     required
@@ -238,10 +206,9 @@ function BusinessDetails() {
                             </FormControl>
                         </Grid>
                         <Grid item xs={4}></Grid>
-
                         <Grid item xs={8}>
                             <FormControl variant="outlined" fullWidth required>
-                                <InputLabel >Details of Business Workspace</InputLabel>
+                                <InputLabel>Details of Business Workspace</InputLabel>
                                 <Select
                                     fullWidth
                                     required
@@ -257,51 +224,51 @@ function BusinessDetails() {
                         <Grid item xs={4}></Grid>
 
                         <Grid item xs={8}>
-                            <TextField fullWidth color="primary" label="if rent- Years" type="string" variant="outlined" />
+                            <TextField fullWidth color="primary" label="if rent- Years" type="string"
+                                variant="outlined" />
                         </Grid>
                     </Grid>
 
                     <HeaderTitle name={"Details of Income"} />
                     <Grid container
-                          direction="row"
-                          justify="flex-start"
-                          alignItems="center" spacing={3}>
+                        direction="row"
+                        justify="flex-start"
+                        alignItems="center" spacing={3}>
 
-                        {income.map( (name) =>
+                        {income.map((name) =>
                             <>
-                            <Grid item sm={4}>
-                                <TextField
-                                    disabled
-                                    id="outlined-read-only-input"
-                                    defaultValue={name.name}
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                    variant="outlined"
-                                />
-                            </Grid>
-                            <Grid item sm={4}>
-                                <TextField color="primary"
-                                label="Last Year's Income"
-                                id="outlined-start-adornment"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">RS.</InputAdornment>,
-                                    }} variant="outlined" />
-                            </Grid>
-                            <Grid item sm={4}>
-                            <TextField color="primary"
-                            label="Current Year's Income"
-                            id="outlined-start-adornment"
-                            InputProps={{
-                            startAdornment: <InputAdornment position="start">RS.</InputAdornment>,
-                        }} variant="outlined" />
-                            </Grid>
+                                <Grid item sm={4}>
+                                    <TextField
+                                        disabled
+                                        id="outlined-read-only-input"
+                                        defaultValue={name.name}
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                                <Grid item sm={4}>
+                                    <TextField color="primary"
+                                        label="Last Year's Income"
+                                        id="outlined-start-adornment"
+                                        InputProps={{
+                                            startAdornment: <InputAdornment
+                                                position="start">RS.</InputAdornment>,
+                                        }} variant="outlined" />
+                                </Grid>
+                                <Grid item sm={4}>
+                                    <TextField color="primary"
+                                        label="Current Year's Income"
+                                        id="outlined-start-adornment"
+                                        InputProps={{
+                                            startAdornment: <InputAdornment
+                                                position="start">RS.</InputAdornment>,
+                                        }} variant="outlined" />
+                                </Grid>
                             </>
                         )}
-
                     </Grid>
-
-
                 </form>
 
             </Container>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Button, Container, Grid, Typography } from "@material-ui/core";
-import Navbar from "../Styles/Navbar";
+import Navbar from "../Helpers/Navbar";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -13,9 +13,9 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-import Upload from './upload'
-import HeaderTitle from './Header'
-
+import Upload from '../Helpers/upload'
+import HeaderTitle from '../Helpers/Header'
+import useStyles from "../Styles/FormStyle";
 
 const name = [
     { name: "Mr" },
@@ -34,27 +34,13 @@ const Education = [
     { name: "10th/12th or Below" }
 ]
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            marginTop: theme.spacing(5),
-        },
-        field: {
-            width: "200px"
-        }
-    },
-    headtext: {
-        border: "1px solid blue",
-        padding: 10
-    }
-}));
 
 function PersonalDetails() {
     const classes = useStyles();
     const [bank, setbank] = useState();
     return (
         <>
-            <Container maxWidth={"md"} style={{ border: "1px solid blue", margin: "50px auto" }}>
+            <Container className={classes.containclass} maxWidth={"md"} >
                 <form className={classes.root} autoComplete="off" style={{ padding: "20px" }}>
 
                     {/* main heading */}
@@ -425,9 +411,9 @@ function PersonalDetails() {
 
                     <HeaderTitle name={"Information of share holding of a Credit Union"} />
                     <Grid container
-                          direction="row"
-                          justify="flex-start"
-                          alignItems="center" spacing={3}>
+                        direction="row"
+                        justify="flex-start"
+                        alignItems="center" spacing={3}>
 
                         <Grid item >
                             <TextField fullWidth color="primary" label="Member No." type="string" variant="outlined" />
@@ -440,9 +426,9 @@ function PersonalDetails() {
 
                     <HeaderTitle name={"Family Member details"} />
                     <Grid container
-                          direction="row"
-                          justify="flex-start"
-                          alignItems="center" spacing={3}>
+                        direction="row"
+                        justify="flex-start"
+                        alignItems="center" spacing={3}>
 
                         {/*bank details*/}
 
@@ -463,9 +449,9 @@ function PersonalDetails() {
                     </Grid>
 
                     <Grid container
-                          direction="row"
-                          justify="flex-start"
-                          alignItems="center" spacing={3}>
+                        direction="row"
+                        justify="flex-start"
+                        alignItems="center" spacing={3}>
                         {/*map from here*/}
                         <Grid item xs={12} md={1}>
                             <TextField
