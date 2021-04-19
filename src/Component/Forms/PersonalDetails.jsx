@@ -1,6 +1,5 @@
 // Personal Detail Form
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useRef, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Button, Container, Grid, Typography } from "@material-ui/core";
 import Navbar from "../Helpers/Navbar";
@@ -16,6 +15,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Upload from '../Helpers/upload'
 import HeaderTitle from '../Helpers/Header'
 import useStyles from "../Styles/FormStyle";
+import Checkbox from '@material-ui/core/Checkbox';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import GridContain from "../Helpers/GridContain";
 
 const name = [
     { name: "Mr" },
@@ -37,11 +42,162 @@ const Education = [
 
 function PersonalDetails() {
     const classes = useStyles();
-    const [bank, setbank] = useState();
+    const [subject, setSubject] = useState({
+        name : "",
+        amount: null,
+        time : null
+    })
+    const subjectname = (event) => {
+        setSubject({...subject, name: event.target.value})
+    }
+    const subjectamount = (event) => {
+        setSubject({...subject, amount: event.target.value})
+    }
+    const subjecttime = (event) => {
+        setSubject({...subject, time: event.target.value})
+    }
+
+    const [namedetail, setNamedetail] = useState({
+        tag: "",
+        lastname: "",
+        firstname:"",
+        middlename:""
+    })
+
+    const namedetailtag= (event) =>{
+        setNamedetail({...namedetail, tag: event.target.value})
+    }
+
+    const namedetaillname= (event) =>{
+        setNamedetail({...namedetail, lastname: event.target.value})
+    }
+
+    const namedetailfname= (event) =>{
+        setNamedetail({...namedetail, firstname: event.target.value})
+    }
+    const namedetailmname= (event) =>{
+        setNamedetail({...namedetail, middlename: event.target.value})
+    }
+
+    const [contact, setContact] = useState({
+        mob1:"",
+        mob2:"",
+        mail:""
+    })
+
+    const contactmob1 = (event) => {
+        setContact({...contact , mob1: event.target.value})
+    }
+
+    const contactmob2 = (event) => {
+        setContact({...contact , mob2: event.target.value})
+    }
+
+    const contactmail = (event) => {
+        setContact({...contact , mail: event.target.value})
+    }
+
+    function handlesubmit(event){
+        event.preventDefault();
+    }
+
+
+    const [resaddr, setresaddr] = useState(
+        {
+            addrline1: "",
+            addrline2: "",
+            city:"",
+            country: "India",
+            pincode: ""
+        });
+    const resaddrline1 = (event) => {
+        setresaddr({...resaddr, addrline1: event.target.value})
+    }
+    const resaddrline2 = (event) => {
+        setresaddr({...resaddr, addrline2: event.target.value})
+    }
+    const resaddrcity = (event) => {
+        setresaddr({...resaddr, city: event.target.value})
+    }
+    const resaddrcountry = (event) => {
+        setresaddr({...resaddr, country: event.target.value})
+    }
+    const resaddrpincode = (event) => {
+        setresaddr({...resaddr, pincode: event.target.value})
+    }
+
+    const [busiaddr, setbusiaddr] = useState(
+        {
+            addrline1: "",
+            addrline2: "",
+            city:"",
+            country: "India",
+            pincode: ""
+        });
+
+    const busiaddrline1 = (event) => {
+        setbusiaddr({...busiaddr, addrline1: event.target.value})
+    }
+    const busiaddrline2 = (event) => {
+        setbusiaddr({...busiaddr, addrline2: event.target.value})
+    }
+    const busiaddrcity = (event) => {
+        setbusiaddr({...busiaddr, city: event.target.value})
+    }
+    const busiaddrcountry = (event) => {
+        setbusiaddr({...busiaddr, country: event.target.value})
+    }
+    const busiaddrpincode = (event) => {
+        setbusiaddr({...busiaddr, pincode: event.target.value})
+    }
+
+    const [check ,setCheck] = useState(false);
+
+    const [residence, setResidence] = useState("");
+    const residencetype= (event) =>{
+        setResidence(event.target.value);
+    }
+
+    const [dob, setDob] = useState({
+        date: new Date(),
+        age: null
+    })
+    const dobdate=(event)=>{
+        setDob({...dob, date: event.target.value})
+    }
+    const dobage=(event)=>{
+        setDob({...dob, age: event.target.value})
+    }
+
+    const [edu, setEdu] = useState( "" )
+    const educ=(event)=>{
+        setEdu(event.target.value)
+    }
+
+    const [number, setNumber] = useState({
+        pan: null,
+        aadhar3: null,
+        aadhar6: null,
+        aadhar9: null
+    })
+
+    const numberpan=(event)=>{
+        setNumber({...number, pan : event.target.value})
+    }
+
+    const numberaadhar3=(event)=>{
+        setNumber({...number, aadhar3 : event.target.value})
+    }
+    const numberaadhar6=(event)=>{
+        setNumber({...number, aadhar6 : event.target.value})
+    }
+    const numberaadhar9=(event)=>{
+        setNumber({...number, aadhar9 : event.target.value})
+    }
     return (
         <>
             <Container className={classes.containclass} maxWidth={"md"} >
-                <form className={classes.root} autoComplete="off" style={{ padding: "20px" }}>
+                <form className={classes.root} autoComplete="off" style={{ padding: "20px" }} >
 
                     {/* main heading */}
                     <Grid container
@@ -54,40 +210,51 @@ function PersonalDetails() {
 
                     {/* subject */}
                     <HeaderTitle name={"Subject"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
-                        <Grid item>
-                            <TextField color="primary" label="Subject of Loan" type="string" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth
+                                       color="primary"
+                                       label="Subject of Loan"
+                                       type="string"
+                                       variant="outlined"
+                                        value={subject.name}
+                                        onChange={subjectname}/>
                         </Grid>
 
-                        <Grid item >
-                            <TextField color="primary" label="Amount" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth
+                                       color="primary"
+                                       label="Amount"
+                                       variant="outlined"
+                                       value={subject.amount}
+                                       onChange={subjectamount}/>
                         </Grid>
 
-                        <Grid item >
-                            <TextField color="primary" label="Time (yrs.)" type="number" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth color="primary" label="Time (yrs.)" type="number" variant="outlined"
+                                       value={subject.time}
+                                       onChange={subjecttime}/>
                         </Grid>
-                    </Grid>
+
+                        <Grid item xs={0} md={3}></Grid>
+                        {console.log(subject.amount)}
+                    </GridContain>
                     {/* subject end*/}
 
                     {/* name */}
                     <HeaderTitle name={"Name"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
-                        <Grid item xs={4} md={2}>
+                        <Grid item xs={12} md={3}>
                             <FormControl variant="outlined" fullWidth required>
-                                <InputLabel >Select</InputLabel>
+                                <InputLabel >Select </InputLabel>
                                 <Select
                                     required
                                     labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    label="Mr/Mrs">
+                                    label="Mr/Mrs"
+                                value={namedetail.tag}
+                                onChange={namedetailtag}>
                                     {name.map((mapname) =>
                                         <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
                                     )}
@@ -95,33 +262,37 @@ function PersonalDetails() {
                             </FormControl>
                         </Grid>
 
-                        <Grid item >
-                            <TextField required color="primary" label="Last Name" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth required color="primary" label="Last Name" variant="outlined"
+                                       value={namedetail.lastname}
+                                       onChange={namedetaillname}/>
                         </Grid>
 
-                        <Grid item >
-                            <TextField required color="primary" label="First Name" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth required color="primary" label="First Name" variant="outlined"
+                                       value={namedetail.firstname}
+                                       onChange={namedetailfname}/>
                         </Grid>
 
-                        <Grid item >
-                            <TextField required color="primary" label="Middle Name" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth required color="primary" label="Middle Name" variant="outlined"
+                                       value={namedetail.middlename}
+                                       onChange={namedetailmname}/>
                         </Grid>
-
-                    </Grid>
+                    </GridContain>
                     {/* name */}
 
                     {/* contact detail */}
                     <HeaderTitle name={"Contact"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item>
+                    <GridContain>
+                        <Grid item xs={12} md={3}>
                             <TextField
                                 required
+                                fullWidth
                                 label="Mobile Number 1"
                                 id="outlined-start-adornment"
-                                // className={clsx(classes.margin, classes.textField)}
+                                value={contact.mob1}
+                                onChange={contactmob1}
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start">+91</InputAdornment>,
                                 }}
@@ -129,8 +300,9 @@ function PersonalDetails() {
                             />
                         </Grid>
 
-                        <Grid item>
+                        <Grid item xs={12} md={3}>
                             <TextField
+                                fullWidth
                                 label="Mobile Number 2"
                                 id="outlined-start-adornment"
                                 // className={clsx(classes.margin, classes.textField)}
@@ -138,132 +310,203 @@ function PersonalDetails() {
                                     startAdornment: <InputAdornment position="start">+91</InputAdornment>,
                                 }}
                                 variant="outlined"
+                                value={contact.mob2}
+                                onChange={contactmob1}
                             />
                         </Grid>
 
-                        <Grid item>
-                            <TextField required color="primary" label="Email" variant="outlined" type="email" />
+                        <Grid item xs={12} md={3}>
+                            <TextField
+                                fullWidth
+                                required color="primary" label="Email" variant="outlined" type="email"
+                                value={contact.mail}
+                                onChange={contactmail}/>
                         </Grid>
 
-                    </Grid>
+                        <Grid item xs={0} md={3}>
+
+                        </Grid>
+
+                    </GridContain>
                     {/* contact detail */}
 
                     {/* Business address */}
                     <HeaderTitle name={"Business Address"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
-                        <Grid item xs={8}>
-                            <TextField fullWidth color="primary" label="Address" type="string" variant="outlined" />
+                        <Grid item xs={12}>
+                            <TextField fullWidth color="primary" label="Address Line 1" type="string" variant="outlined"
+                            value={busiaddr.addrline1}
+                            onChange={busiaddrline1}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField fullWidth color="primary" label="Address Line 2" type="string" variant="outlined"
+                                       value={busiaddr.addrline2}
+                                       onChange={busiaddrline2}/>
                         </Grid>
 
-                        <Grid item>
-                            <TextField color="primary" label="City" type="string" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth color="primary" label="City" type="string" variant="outlined"
+                                       value={busiaddr.city}
+                                       onChange={busiaddrcity}/>
                         </Grid>
 
-                        <Grid item >
-                            <TextField required color="primary" label="Country" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth required color="primary" label="Country" variant="outlined"
+                                       value={busiaddr.country}
+                                       onChange={busiaddrcountry}
+                            />
                         </Grid>
 
-                        <Grid item >
-                            <TextField required color="primary" label="Pincode" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth required color="primary" label="Pincode" variant="outlined"
+                                       value={busiaddr.pincode}
+                                       onChange={busiaddrpincode}/>
                         </Grid>
 
-                    </Grid>
+                    </GridContain>
 
                     {/* Home address */}
                     <HeaderTitle name={"Residence Address"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
 
-                        <Grid item xs={8}>
-                            <TextField fullWidth color="primary" label="Address" type="string" variant="outlined" />
-                        </Grid>
+                    <GridContain>
+                        <>
+                        <Grid item xs={12}><Checkbox color="primary" value={check} onClick={() => setCheck(!check)}/> {check} Same as Business Address</Grid>
 
-                        <Grid item>
-                            <TextField color="primary" label="City" type="string" variant="outlined" />
-                        </Grid>
+                        { check === true ?
+                            <>
+                                <Grid item xs={12}>
+                                    <TextField fullWidth color="primary" label="Address Line 1" type="string" variant="outlined"
+                                               value={busiaddr.addrline1}
+                                               onChange={resaddrline1}/>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField fullWidth color="primary" label="Address Line 2" type="string" variant="outlined"
+                                               value={busiaddr.addrline2}
+                                               onChange={resaddrline2}/>
+                                </Grid>
 
-                        <Grid item >
-                            <TextField required color="primary" label="Country" variant="outlined" />
+                                <Grid item xs={12} md={3}>
+                                    <TextField fullWidth color="primary" label="City" type="string" variant="outlined"
+                                               value={ busiaddr.city}
+                                               onChange={resaddrcity}/>
+                                </Grid>
+
+                                <Grid item xs={12} md={3}>
+                                    <TextField fullWidth required color="primary" label="Country" variant="outlined"
+                                               value={busiaddr.country}
+                                               onChange={resaddrcountry}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12} md={3}>
+                                    <TextField fullWidth required color="primary" label="Pincode" variant="outlined"
+                                               value={busiaddr.pincode}
+                                               onChange={resaddrpincode}/>
+                                </Grid>
+
+                            </>
+                            :
+                            <>
+                                <Grid item xs={12}>
+                            <TextField fullWidth color="primary" label="Address Line 1" type="string" variant="outlined"
+                            value={resaddr.addrline1}
+                            onChange={resaddrline1}/>
                         </Grid>
-                        <Grid item >
-                            <TextField required color="primary" label="Pincode" variant="outlined" />
-                        </Grid>
-                    </Grid>
+                            <Grid item xs={12}>
+                                <TextField fullWidth color="primary" label="Address Line 2" type="string" variant="outlined"
+                                           value={resaddr.addrline2}
+                                           onChange={resaddrline2}/>
+                            </Grid>
+
+                            <Grid item xs={12} md={3}>
+                                <TextField fullWidth color="primary" label="City" type="string" variant="outlined" value={resaddr.city}
+                                           onChange={resaddrcity}/>
+                            </Grid>
+
+                            <Grid item xs={12} md={3}>
+                                <TextField fullWidth required color="primary" label="Country" variant="outlined"
+                                           value={resaddr.country}
+                                           onChange={resaddrcountry}/>
+                            </Grid>
+
+                            <Grid item xs={12} md={3}>
+                                <TextField fullWidth required color="primary" label="Pincode" variant="outlined"
+                                           value={resaddr.pincode}
+                                           onChange={resaddrpincode}/>
+                            </Grid>
+
+                            </>}
+                        </>
+
+
+                    </GridContain>
 
                     {/* status home */}
                     <HeaderTitle name={"Residence"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item xs={12} md={8}>
+                    <GridContain>
+                        <Grid item xs={12} md={3}>
                             <FormControl variant="outlined" required fullWidth>
                                 <InputLabel >Residence</InputLabel>
                                 <Select
+                                    fullWidth
                                     required
-                                    labelWidth
                                     labelId="demo-simple-select-outlined-label"
                                     id="demo-simple-select-outlined"
                                     label="Residence">
                                     {Residence.map((mapname) =>
                                         <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
                                     )}
-
                                 </Select>
                             </FormControl>
                         </Grid>
-                    </Grid>
+                    </GridContain>
 
 
                     {/* date of birth */}
                     <HeaderTitle name={"Date of Birth"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
-                        <Grid item >
+                        <Grid item xs={12} md={3}>
                             <TextField
+                                fullWidth
                                 variant="outlined"
                                 id="date"
                                 label="Date of Birth"
                                 type="date"
-                                defaultValue=""
+                                value={dob.date}
+                                onChange={dobdate}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
                             />
                         </Grid>
-                        <Grid item >
+                        <Grid item xs={12} md={3}>
                             <TextField
+                                fullWidth
                                 variant="outlined"
                                 label="Age"
                                 type="Number"
+                                value={dob.age}
+                                onChange={dobage}
                             />
                         </Grid>
-                    </Grid>
+                    </GridContain>
 
                     {/* education */}
                     <HeaderTitle name={"Education"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item xs={12} md={8}>
+                    <GridContain>
+                        <Grid item xs={12} md={3}>
                             <FormControl variant="outlined" required fullWidth={4}>
                                 <InputLabel >Education</InputLabel>
                                 <Select
+                                    fullWidth
                                     required
-                                    labelWidth
                                     labelId="demo-simple-select-outlined-label"
                                     id="demo-simple-select-outlined"
                                     label="Education"
+                                    value={edu}
+                                    onChange={educ}
                                 >
 
                                     {Education.map((mapname) =>
@@ -273,58 +516,64 @@ function PersonalDetails() {
                                 </Select>
                             </FormControl>
                         </Grid>
-                    </Grid>
+                    </GridContain>
 
                     {/* subject */}
                     <HeaderTitle name={"Pan Details"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={3}>
                             <TextField
+                                fullWidth
                                 autoCapitalize
                                 type="string"
                                 label="Pan Number"
                                 id="outlined-start-adornment"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">10 Character</InputAdornment>,
-                                }}
                                 variant="outlined"
+                                value={number.pan}
+                                onChange={numberpan}
                             />
                         </Grid>
 
-                    </Grid>
+                    </GridContain>
                     {/* subject end*/}
 
                     <HeaderTitle name={"Aadhar Details"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={4} md={3}>
                             <TextField
-                                type="number"
-                                label="Aadhar Number"
+                                label="4 Digit"
                                 id="outlined-start-adornment"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">12 Digit</InputAdornment>,
-                                }}
-                                variant="outlined" />
+                                variant="outlined"
+                                value={number.aadhar3}
+                                onChange={numberaadhar3}/>
                         </Grid>
-                    </Grid>
+                        <Grid item xs={4} md={3}>
+                            <TextField
+                                label="4 Digit"
+                                id="outlined-start-adornment"
+                                variant="outlined"
+                                value={number.aadhar6}
+                                onChange={numberaadhar6}/>
+                        </Grid>
+                        <Grid item xs={4} md={3}>
+                            <TextField
+                                label="4 Digit"
+                                id="outlined-start-adornment"
+                                variant="outlined"
+                                value={number.aadhar9}
+                                onChange={numberaadhar9}/>
+                        </Grid>
+                    </GridContain>
 
 
                     <HeaderTitle name={"Dependant Family Members"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={3}>
                             <TextField
+                                fullWidth
                                 type="number"
                                 label="Children's"
                                 id="outlined-start-adornment"
@@ -334,19 +583,21 @@ function PersonalDetails() {
                                 variant="outlined" />
                         </Grid>
 
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={3}>
                             <TextField
+                                fullWidth
                                 type="number"
-                                label="Salaried Members"
+                                label="Salaried"
                                 id="outlined-start-adornment"
                                 InputProps={{
-                                    startAdornment: <InputAdornment position="start">Salaried Member's</InputAdornment>,
+                                    startAdornment: <InputAdornment position="start">Salaried</InputAdornment>,
                                 }}
                                 variant="outlined" />
                         </Grid>
 
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={3}>
                             <TextField
+                                fullWidth
                                 type="number"
                                 label="Total Member's"
                                 id="outlined-start-adornment"
@@ -356,128 +607,94 @@ function PersonalDetails() {
                                 variant="outlined" />
                         </Grid>
 
-                    </Grid>
+                    </GridContain>
 
                     <HeaderTitle name={"Existing Bank Account's"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
                         {/*bank details*/}
-
-                        <Grid item xs={5} md={3}>
-                            <TextField
-                                type="number"
-                                label="Total Banks"
-                                id="outlined-start-adornment"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Number</InputAdornment>,
-                                }}
-                                variant="outlined" />
+                        <Grid item xs={2}>
+                            <Fab size="small" color="primary" aria-label="add" >
+                                <AddIcon />
+                            </Fab>
                         </Grid>
+                    </GridContain>
 
-                        <Grid item xs={7} md={9}>
-                        </Grid>
-
-                    </Grid>
-
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
                         {/*map from here*/}
-                        <Grid item xs={12} md={1}>
-                            <TextField
-                                type="number"
-                                label="Sr.No"
-                                id="outlined-start-adornment"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start"></InputAdornment>,
-                                }}
-                                variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} md={5}>
+
+                        <Grid item xs={12} md={3}>
                             <TextField fullWidth color="primary" label="Bank Name" type="string" variant="outlined" />
                         </Grid>
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={3}>
                             <TextField fullWidth color="primary" label="Branch Name" type="string" variant="outlined" />
                         </Grid>
-                        <Grid item xs={12} md={2}>
+                        <Grid item xs={12} md={3}>
                             <TextField fullWidth type="numbers" color="primary" label="Years" type="string" variant="outlined" />
                         </Grid>
+                        <Grid item xs={2} md={1}>
+                            <Fab size="small" color="secondary" aria-label="add" >
+                                <EditIcon />
+                            </Fab>
+                        </Grid>
+                        <Grid item xs={2} md={2}>
+                            <Fab size="small" color="secondary" aria-label="add" >
+                                <DeleteIcon />
+                            </Fab>
+                        </Grid>
                         {/*    map ends here*/}
-                    </Grid>
+                    </GridContain>
 
                     <HeaderTitle name={"Information of share holding of a Credit Union"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
-                        <Grid item >
+                        <Grid item xs={12} md={3}>
                             <TextField fullWidth color="primary" label="Member No." type="string" variant="outlined" />
                         </Grid>
 
-                        <Grid item>
-                            <TextField color="primary" label="Amount of Shares" type="string" variant="outlined" />
+                        <Grid item xs={12} md={3}>
+                            <TextField fullWidth color="primary" label="Amount of Shares" type="string" variant="outlined" />
                         </Grid>
-                    </Grid>
+                    </GridContain>
 
                     <HeaderTitle name={"Family Member details"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
 
                         {/*bank details*/}
-
-                        <Grid item xs={5} md={3}>
-                            <TextField
-                                type="number"
-                                label="Total Members"
-                                id="outlined-start-adornment"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Number</InputAdornment>,
-                                }}
-                                variant="outlined" />
+                        <Grid item xs={2}>
+                            <Fab size="small" color="primary" aria-label="add" >
+                                <AddIcon />
+                            </Fab>
                         </Grid>
+                    </GridContain>
 
-                        <Grid item xs={7} md={9}>
-                        </Grid>
-
-                    </Grid>
-
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
                         {/*map from here*/}
-                        <Grid item xs={12} md={1}>
-                            <TextField
-                                type="number"
-                                label="Sr.No"
-                                id="outlined-start-adornment"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start"></InputAdornment>,
-                                }}
-                                variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} md={5}>
+                        <Grid item xs={12} md={3}>
                             <TextField fullWidth color="primary" label="Name" type="string" variant="outlined" />
                         </Grid>
-                        <Grid item xs={12} md={2}>
-                            <TextField fullWidth color="primary" label="Age" type="string" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} md={2}>
+
+                        <Grid item xs={12} md={3}>
                             <TextField fullWidth type="numbers" color="primary" label="Relation" type="string" variant="outlined" />
                         </Grid>
-                        <Grid item xs={12} md={2}>
+                        <Grid item xs={12} md={3}>
                             <TextField fullWidth type="numbers" color="primary" label="Occupation" type="string" variant="outlined" />
                         </Grid>
+                        <Grid item xs={12} md={1}>
+                            <TextField fullWidth color="primary" label="Age" type="string" variant="outlined" />
+                        </Grid>
+                        <Grid item xs={2} md={1}>
+                            <Fab size="small" color="secondary" aria-label="add" >
+                                <EditIcon />
+                            </Fab>
+                        </Grid>
+                        <Grid item xs={2} md={1}>
+                            <Fab size="small" color="secondary" aria-label="add" >
+                                <DeleteIcon />
+                            </Fab>
+                        </Grid>
                         {/*    map ends here*/}
-                    </Grid>
-
+                    </GridContain>
 
                 </form>
 

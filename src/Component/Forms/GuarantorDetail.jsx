@@ -71,7 +71,7 @@ function GuarantorDetails() {
                                 justify="flex-start"
                                 alignItems="center" spacing={3}>
 
-                                <Grid item xs={4} md={2}>
+                                <Grid item xs={3} md={3}>
                                     <FormControl variant="outlined" fullWidth required>
                                         <InputLabel >Select</InputLabel>
                                         <Select
@@ -85,15 +85,15 @@ function GuarantorDetails() {
                                         </Select>
                                     </FormControl>
                                 </Grid>
-                                <Grid item >
+                                <Grid item xs={12} md={3}>
                                     <TextField required color="primary" label="Last Name" variant="outlined" />
                                 </Grid>
 
-                                <Grid item >
+                                <Grid item  xs={12} md={3}>
                                     <TextField required color="primary" label="First Name" variant="outlined" />
                                 </Grid>
 
-                                <Grid item >
+                                <Grid item  xs={12} md={3}>
                                     <TextField required color="primary" label="Middle Name" variant="outlined" />
                                 </Grid>
                             </Grid>
@@ -104,19 +104,23 @@ function GuarantorDetails() {
                                 justify="flex-start"
                                 alignItems="center" spacing={3}>
 
-                                <Grid item xs={8}>
+                                <Grid item xs={12}>
                                     <TextField fullWidth color="primary" label="Address" type="string" variant="outlined" />
                                 </Grid>
 
-                                <Grid item>
+                                <Grid item xs={12}>
+                                    <TextField fullWidth color="primary" label="Address" type="string" variant="outlined" />
+                                </Grid>
+
+                                <Grid item xs={12} md={3}>
                                     <TextField color="primary" label="City" type="string" variant="outlined" />
                                 </Grid>
 
-                                <Grid item >
+                                <Grid item xs={12} md={3}>
                                     <TextField required color="primary" label="Country" variant="outlined" />
                                 </Grid>
 
-                                <Grid item >
+                                <Grid item xs={12} md={3}>
                                     <TextField required color="primary" label="Pincode" variant="outlined" />
                                 </Grid>
 
@@ -128,7 +132,7 @@ function GuarantorDetails() {
                                 direction="row"
                                 justify="flex-start"
                                 alignItems="center" spacing={3}>
-                                <Grid item>
+                                <Grid item xs={12} md={3}>
                                     <TextField
                                         required
                                         label="Mobile Number 1"
@@ -141,7 +145,7 @@ function GuarantorDetails() {
                                     />
                                 </Grid>
 
-                                <Grid item>
+                                <Grid item xs={12} md={3}>
                                     <TextField
                                         label="Mobile Number 2"
                                         id="outlined-start-adornment"
@@ -153,7 +157,7 @@ function GuarantorDetails() {
                                     />
                                 </Grid>
 
-                                <Grid item>
+                                <Grid item xs={12} md={3}>
                                     <TextField required color="primary" label="Email" variant="outlined" type="email" />
                                 </Grid>
 

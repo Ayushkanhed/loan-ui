@@ -12,6 +12,7 @@ import LoanDetails from "./LoanDetails";
 import GuarantorDetails from "./GuarantorDetail";
 import UploadDetails from "./UploadDetails";
 import useStyles from "../Styles/FormStyle";
+import { Link } from 'react-router-dom';
 
 function getSteps() {
     return ['Your Personal Details', 'Business Details', 'Loan details', "Guarante Details", 'Documents Upload'];
@@ -53,15 +54,16 @@ export default function HorizontalLabelPositionBelowStepper() {
 
     return (
         <div className={classes.stepperroot}>
-            <Container maxWidth={"md"} justify="center" alignItems="center">
+            <Grid container justify="center" alignItems="center">
                 <Stepper activeStep={activeStep} alternativeLabel>
                     {steps.map((label) => (
-                        <Step key={label}>
+
+                        <Step onClick={<UploadDetails />} key={label}>
                             <StepLabel>{label}</StepLabel>
                         </Step>
                     ))}
                 </Stepper>
-            </Container>
+            </Grid>
             <div>
                 {activeStep === steps.length ? (
                     <div>
@@ -89,6 +91,6 @@ export default function HorizontalLabelPositionBelowStepper() {
                     </Grid>
                 )}
             </div>
-        </div>
+        </div >
     );
 }

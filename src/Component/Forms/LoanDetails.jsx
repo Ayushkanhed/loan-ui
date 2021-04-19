@@ -9,6 +9,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import HeaderTitle from '../Helpers/Header'
 import useStyles from "../Styles/FormStyle";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const name = [
     { name: "Mr" },
@@ -51,17 +54,10 @@ function LoanDetails() {
                         direction="row"
                         justify="flex-start"
                         alignItems="center" spacing={3}>
-                        <Grid item>
-                            <TextField
-                                required
-                                label="Total Loans"
-                                id="outlined-start-adornment"
-                                // className={clsx(classes.margin, classes.textField)}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Number</InputAdornment>,
-                                }}
-                                variant="outlined"
-                            />
+                        <Grid item xs={12}>
+                            <Fab size="small" color="primary" aria-label="add" >
+                                <AddIcon />
+                            </Fab>
                         </Grid>
                     </Grid>
 
@@ -70,7 +66,7 @@ function LoanDetails() {
                         direction="row"
                         justify="flex-start"
                         alignItems="center" spacing={3}>
-                        <Grid item md={6}>
+                        <Grid item xs={12} md={3}>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -82,7 +78,7 @@ function LoanDetails() {
                                     shrink: true,
                                 }} />
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item xs={12} md={3}>
                             <TextField
                                 required
                                 fullWidth
@@ -95,7 +91,7 @@ function LoanDetails() {
                                 variant="outlined"
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={9}>
                             <TextField
                                 fullWidth
                                 id="outlined-multiline-static"
@@ -105,6 +101,11 @@ function LoanDetails() {
                                 variant="outlined"
                             />
                         </Grid>
+                        <Grid item xs={3}>
+                            <Fab size="small" color="secondary" aria-label="add" >
+                                <DeleteIcon />
+                            </Fab>
+                        </Grid>
                     </Grid>
 
 
@@ -113,7 +114,7 @@ function LoanDetails() {
                         direction="row"
                         justify="flex-start"
                         alignItems="center" spacing={3}>
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={3}>
                             <FormControl variant="outlined" fullWidth>
                                 <InputLabel>Select Type</InputLabel>
                                 <Select
@@ -133,7 +134,7 @@ function LoanDetails() {
                         direction="row"
                         justify="flex-start"
                         alignItems="center" spacing={3}>
-                        <Grid item>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 required
                                 fullWidth
@@ -146,7 +147,7 @@ function LoanDetails() {
                                 variant="outlined"
                             />
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 required
                                 fullWidth
@@ -159,6 +160,7 @@ function LoanDetails() {
                                 variant="outlined"
                             />
                         </Grid>
+
                     </Grid>
 
                     <HeaderTitle name={"if Recommendation by Director/Distinguished Person"} />
@@ -166,7 +168,7 @@ function LoanDetails() {
                         direction="row"
                         justify="flex-start"
                         alignItems="center" spacing={3}>
-                        <Grid item xs={10}>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 fullWidth
                                 color="primary" label="Name" type="string" variant="outlined" />

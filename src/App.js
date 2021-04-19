@@ -8,6 +8,7 @@ import LoanRequest from "./Pages/Loanrequest";
 import CustomStepper from "./Component/Forms/HorizontalStepper";
 import PersonalDetails from "./Component/Forms/PersonalDetails";
 import HorizontalLabelPositionBelowStepper from "./Component/Forms/HorizontalStepper";
+import Navbar from "./Component/Helpers/Navbar";
 
 function App() {
     return (
@@ -27,7 +28,6 @@ function App() {
                         <Route path="/loanrequest">
                             <LoanRequest />
                         </Route>
-
                     </Switch>
                 </BrowserRouter>
             </Layout>

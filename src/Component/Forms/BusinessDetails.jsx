@@ -9,6 +9,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import HeaderTitle from '../Helpers/Header'
 import useStyles from "../Styles/FormStyle";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
+import GridContain from "../Helpers/GridContain";
 
 const emp = [
     { name: "Job" },
@@ -60,195 +64,243 @@ const income = [
 
 function BusinessDetails() {
     const classes = useStyles();
-    const [bank, setbank] = useState();
+    const [work, setWork] = useState("");
+    const [expr, setExpr] = useState(null);
+    const [jobvalue, setJobvalue] = useState(
+        {
+            retyr: null,
+            type: "",
+            position: "",
+            addrline1: "",
+            addrline2: "",
+            city:"",
+            country: "India",
+            pincode: ""
+        });
+    const [BusinessDetail, setBusinessDetail] = useState({
+        Ownership: "",
+        workspace: "",
+        rentyrs: null
+    });
+
     return (
         <>
             <Container className={classes.containclass} maxWidth={"md"}>
                 <form className={classes.root} autoComplete="off" style={{ padding: "20px" }}>
 
                     {/* main heading */}
-                    <Grid container
-                        direction="row"
-                        justify="center"
-                        alignItems="center" spacing={3}>
+                    <Grid  container
+                           direction="row"
+                           justify="center"
+                           alignItems="center" spacing={3}>
                         <Typography variant="h5" className={classes.headtext}>Business Details</Typography>
                     </Grid>
                     {/* main heading */}
 
                     {/* Work status */}
                     <HeaderTitle name={"Work Status"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item xs={8}>
-                            <FormControl variant="outlined" fullWidth required>
-                                <InputLabel>Select</InputLabel>
+                    <GridContain>
+                        <Grid item xs={12} md={3}>
+                            <FormControl
+                                variant="outlined"
+                                fullWidth
+                                required>
+                                <InputLabel >Select</InputLabel>
                                 <Select
                                     required
                                     labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    label="Work">
+                                    label="Work"
+                                    value={work}
+                                    onChange={ (e)=> setWork(e.target.value)}
+                                >
                                     {emp.map((mapname) =>
                                         <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
                                     )}
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={4}></Grid>
-                    </Grid>
+
+                    </GridContain>
 
 
                     {/* Business Expr */}
-                    <HeaderTitle name={"Experience in "} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item xs={8}>
-                            <TextField required type="number" color="primary" label="Experience(if busi)"
-                                variant="outlined" />
+                    <HeaderTitle name={"Experience in "+work} />
+                    <GridContain>
+                        <Grid item xs={12} md={3}>
+                            <TextField
+                                required
+                                type="number"
+                                color="primary"
+                                label="Experience"
+                                variant="outlined"
+                            value={expr}
+                            onChange={ (event => setExpr(event.target.value))}/>
                         </Grid>
-                        <Grid item xs={4}></Grid>
-                    </Grid>
+                    </GridContain>
 
 
                     {/* Retirement Job */}
-                    <HeaderTitle name={"Time left for Retirement(if job)"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item>
-                            <TextField
-                                required
-                                label="Years Left"
-                                id="outlined-start-adornment"
-                                // className={clsx(classes.margin, classes.textField)}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Years</InputAdornment>,
-                                }}
-                                variant="outlined" />
-                        </Grid>
-                    </Grid>
-
-                    {/* Job Details */}
-                    <HeaderTitle name={"if job -- JOB Details"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item xs={8}>
-                            <FormControl variant="outlined" fullWidth required>
-                                <InputLabel>Job Status</InputLabel>
-                                <Select
-                                    fullWidth
-                                    required
-                                    labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    label="Job Type">
-                                    {job.map((mapname) =>
-                                        <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
-                                    )}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={4}></Grid>
-                        <Grid item xs={8}>
-                            <TextField fullWidth color="primary" label="Job Location Details" type="string"
-                                variant="outlined" />
-                        </Grid>
-                        <Grid item>
-                            <TextField color="primary" label="City" type="string" variant="outlined" />
-                        </Grid>
-                        <Grid item>
-                            <TextField required color="primary" label="Country" variant="outlined" />
-                        </Grid>
-                        <Grid item>
-                            <TextField required color="primary" label="Pincode" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={8}>
-                            <FormControl variant="outlined" fullWidth required>
-                                <InputLabel>Job Title Status</InputLabel>
-                                <Select
-                                    required
-                                    fullWidth
-                                    variant="outlined"
-                                    label="Job Type">
-                                    {jobtitle.map((mapname) =>
-                                        <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
-                                    )}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={4}></Grid>
-                    </Grid>
-
-                    {/*Business*/}
-                    <HeaderTitle name={"if business-- Business/Industry Details"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item xs={8}>
-                            <FormControl variant="outlined" fullWidth required>
-                                <InputLabel>Details of Owenership</InputLabel>
-                                <Select
-                                    fullWidth
-                                    required
-                                    labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    label="Job Type">
-                                    {business.map((mapname) =>
-                                        <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
-                                    )}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={4}></Grid>
-                        <Grid item xs={8}>
-                            <FormControl variant="outlined" fullWidth required>
-                                <InputLabel>Details of Business Workspace</InputLabel>
-                                <Select
-                                    fullWidth
-                                    required
-                                    labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    label="WorkSpace">
-                                    {offdetail.map((mapname) =>
-                                        <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
-                                    )}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={4}></Grid>
-
-                        <Grid item xs={8}>
-                            <TextField fullWidth color="primary" label="if rent- Years" type="string"
-                                variant="outlined" />
-                        </Grid>
-                    </Grid>
-
-                    <HeaderTitle name={"Details of Income"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-
-                        {income.map((name) =>
-                            <>
-                                <Grid item sm={4}>
+                    { work === "Job" ?
+                        <>
+                            <HeaderTitle name={"Time left for Retirement"} />
+                            <GridContain>
+                                <Grid item xs={12} md={3}>
                                     <TextField
-                                        disabled
-                                        id="outlined-read-only-input"
-                                        defaultValue={name.name}
+                                        required
+                                        label="Years Left"
+                                        id="outlined-start-adornment"
                                         InputProps={{
-                                            readOnly: true,
+                                            startAdornment: <InputAdornment position="start">Years</InputAdornment>,
                                         }}
                                         variant="outlined"
-                                    />
+                                        value={jobvalue.retyr}
+                                        onChange={ (event => setJobvalue({...jobvalue, retyr: event.target.value}))}/>
                                 </Grid>
-                                <Grid item sm={4}>
+                            </GridContain>
+
+                            {/* Job Details */}
+                            <HeaderTitle name={"JOB Details"} />
+                            <GridContain>
+                                <Grid item xs={12} md={3}>
+                                    <FormControl variant="outlined" fullWidth required>
+                                        <InputLabel>Job Status</InputLabel>
+                                        <Select
+                                            fullWidth
+                                            required
+                                            labelId="demo-simple-select-outlined-label"
+                                            id="demo-simple-select-outlined"
+                                            label="Job Type"
+                                            value={jobvalue.type}
+                                            onChange={ (event => setJobvalue({...jobvalue, type: event.target.value}))}>
+                                            {job.map((mapname) =>
+                                                <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
+                                            )}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={0} md={9}></Grid>
+                                <Grid item xs={12} md={3}>
+                                    <FormControl variant="outlined" fullWidth required>
+                                        <InputLabel >Position</InputLabel>
+                                        <Select
+                                            required
+                                            labelId="demo-simple-select-outlined-label"
+                                            // id="demo-simple-select-outlined"
+                                            label="Job Type"
+                                            value={jobvalue.position}
+                                            onChange={ (event => setJobvalue({...jobvalue, position: event.target.value})) }
+                                        >
+                                            {jobtitle.map((mapname) =>
+                                                <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
+                                            )}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                {
+                                    jobvalue.position ==="Other" ? <Grid item xs={12} md={3}>
+                                        <TextField fullWidth color="primary" label="Other Jobtitle" type="string"
+                                                   variant="outlined" />
+                                    </Grid> : <></>
+                                }
+
+                                <Grid item xs={12}>
+                                    <TextField fullWidth color="primary" label="Job Location Details" type="string"
+                                               variant="outlined"
+                                            value={jobvalue.addrline1}
+                                            onChange={ (event => setJobvalue({...jobvalue, addrline1: event.target.value}))}/>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField fullWidth color="primary" label="Job Location Details" type="string"
+                                                variant="outlined"
+                                                value={jobvalue.addrline2}
+                                                onChange={ (event => setJobvalue({...jobvalue, addrline2: event.target.value}))}/>
+                                </Grid>
+                                <Grid item xs={12} md={3}>
+                                    <TextField
+                                            color="primary"
+                                            label="City"
+                                            type="string"
+                                            variant="outlined"
+                                            value={jobvalue.city}
+                                            onChange={ (event => setJobvalue({...jobvalue, city: event.target.value}))}/>
+                                </Grid>
+                                <Grid item xs={12} md={3}>
+                                    <TextField required color="primary" label="Country" variant="outlined"
+                                        value={jobvalue.country}
+                                        onChange={ (event => setJobvalue({...jobvalue, country: event.target.value}))}/>
+                                </Grid>
+                                <Grid item xs={12} md={3}>
+                                    <TextField required color="primary" label="Pincode" variant="outlined"
+                                               value={jobvalue.pincode}
+                                               onChange={ (event => setJobvalue({...jobvalue, pincode: event.target.value}))}/>
+                                </Grid>
+                            </GridContain>
+                        </> : (work==="Business" || work==="Industry" ? <>
+                            <HeaderTitle name={"Business/Industry Details"} />
+                            <GridContain>
+                                <Grid item xs={12} md={6}>
+                                    <FormControl variant="outlined" fullWidth required>
+                                        <InputLabel >Owenership</InputLabel>
+                                        <Select
+                                            fullWidth
+                                            label="Job Type"
+                                        value={BusinessDetail.Ownership}
+                                        onChange={ (event => setBusinessDetail({...BusinessDetail, Ownership: event.target.value}))}>
+                                            {business.map((mapname) =>
+                                                <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
+                                            )}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={0} md={6}></Grid>
+                                <Grid item xs={12} md={6}>
+                                    <FormControl variant="outlined" fullWidth required>
+                                        <InputLabel >Business Workspace</InputLabel>
+                                        <Select
+                                            fullWidth
+                                            label="Workspace"
+                                            value={BusinessDetail.workspace}
+                                            onChange={ (event => setBusinessDetail({...BusinessDetail, workspace: event.target.value}))}>
+                                            {offdetail.map((mapname) =>
+                                                <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
+                                            )}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={0} md={6}></Grid>
+                                {BusinessDetail.workspace === "On Rent" ? <>
+                                    <Grid item xs={12} md={3}>
+                                        <TextField
+                                            fullWidth
+                                            color="primary"
+                                            label="Rent Years"
+                                            variant="outlined"
+                                            value={BusinessDetail.rentyrs}
+                                            onChange={ (event => setBusinessDetail({...BusinessDetail, rentyrs: event.target.value}))}
+                                        />
+                                    </Grid>
+                                </>:null}
+                            </GridContain>
+                        </>:<></>)
+                    }
+
+
+                    {/*Business*/}
+
+
+                    <HeaderTitle name={"Details of Income"} />
+                    <GridContain>
+                        {income.map((name) =>
+                            <>
+                                <Grid item xs={12}>
+                                    <Fab size="small" color="primary" aria-label="add" >
+                                        <AddIcon />
+                                    </Fab>
+                                </Grid>
+                                <Grid item sm={3}>
+                                    <HeaderTitle name={name.name} />
+                                </Grid>
+                                <Grid item sm={3}>
                                     <TextField color="primary"
                                         label="Last Year's Income"
                                         id="outlined-start-adornment"
@@ -257,7 +309,7 @@ function BusinessDetails() {
                                                 position="start">RS.</InputAdornment>,
                                         }} variant="outlined" />
                                 </Grid>
-                                <Grid item sm={4}>
+                                <Grid item sm={3}>
                                     <TextField color="primary"
                                         label="Current Year's Income"
                                         id="outlined-start-adornment"
@@ -266,9 +318,14 @@ function BusinessDetails() {
                                                 position="start">RS.</InputAdornment>,
                                         }} variant="outlined" />
                                 </Grid>
+                                <Grid item xs={3}>
+                                    <Fab size="small" color="secondary" aria-label="add" >
+                                        <DeleteIcon />
+                                    </Fab>
+                                </Grid>
                             </>
                         )}
-                    </Grid>
+                    </GridContain>
                 </form>
 
             </Container>
