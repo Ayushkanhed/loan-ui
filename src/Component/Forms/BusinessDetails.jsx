@@ -58,9 +58,13 @@ const offdetail = [
 const income = [
     { name: "Salary / Business Income" },
     { name: "Other Income" },
-    { name: "Income of Son" },
+    { name: "Income from Children" },
     { name: "Total Annual Income" },
 ]
+
+const year = [ {id: 2000},{id: 2001},{id: 2002},{id: 2003},{id: 2004},{id: 2005},{id: 2006},
+                {id: 2007},{id: 2008},{id: 2009},{id: 2010},{id: 2011},{id: 2012},{id: 2013},
+    {id: 2014},{id: 2015},{id: 2016},{id: 2017},{id: 2018},{id: 2019},{id: 2020},{id: 2021}]
 
 function BusinessDetails() {
     const classes = useStyles();
@@ -82,6 +86,28 @@ function BusinessDetails() {
         workspace: "",
         rentyrs: null
     });
+
+    const [incomeList, setIncomeList] = useState(
+        [
+            { Income: null, OtherIncome: null, fromchild: null, Total:null }
+        ]);
+
+    function incomeChange(event, index) {
+        const {inputname, value} = event.target;
+        const list = [...incomeList];
+        list[index][inputname] = value;
+        setIncomeList(list);
+    }
+
+    const familyRemove = (index) =>{
+        const list = [...incomeList];
+        list.splice(index, 1);
+        setIncomeList(list);
+    }
+    const familyAdd = () =>{
+        setIncomeList([...incomeList, {Income: null, OtherIncome: null, fromchild: null, Total:null}])
+    }
+
 
     return (
         <>
@@ -290,41 +316,64 @@ function BusinessDetails() {
 
                     <HeaderTitle name={"Details of Income"} />
                     <GridContain>
+                        <Grid item xs={12}>
+                            <Fab size="small" color="primary" aria-label="add" >
+                                <AddIcon />
+                            </Fab>
+                        </Grid>
                         {income.map((name) =>
                             <>
-                                <Grid item xs={12}>
-                                    <Fab size="small" color="primary" aria-label="add" >
-                                        <AddIcon />
-                                    </Fab>
-                                </Grid>
+
                                 <Grid item sm={3}>
                                     <HeaderTitle name={name.name} />
                                 </Grid>
-                                <Grid item sm={3}>
+                            </>
+                        )}
+
+                        <Grid item xs={12} md={3} className={classes.field}>
+                            <FormControl variant="outlined" fullWidth required>
+                                <InputLabel >Year of Loan</InputLabel>
+                                <Select
+                                    required
+                                    labelId="demo-simple-select-outlined-label"
+                                    // id="demo-simple-select-outlined"
+                                    label="Year of Loan">
+                                    {year.map((mapname) =>
+                                        <MenuItem value={mapname.id}>{mapname.id}</MenuItem>
+                                    )}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <GridContain>
+                        {income.map((name) =>
+                            <>
+                                <Grid item sm={3} className={classes.fieldmargin}>
                                     <TextField color="primary"
-                                        label="Last Year's Income"
-                                        id="outlined-start-adornment"
-                                        InputProps={{
-                                            startAdornment: <InputAdornment
-                                                position="start">RS.</InputAdornment>,
-                                        }} variant="outlined" />
-                                </Grid>
-                                <Grid item sm={3}>
-                                    <TextField color="primary"
-                                        label="Current Year's Income"
-                                        id="outlined-start-adornment"
-                                        InputProps={{
-                                            startAdornment: <InputAdornment
-                                                position="start">RS.</InputAdornment>,
-                                        }} variant="outlined" />
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <Fab size="small" color="secondary" aria-label="add" >
-                                        <DeleteIcon />
-                                    </Fab>
+                                               label="Last Year's Income"
+                                               id="outlined-start-adornment"
+                                               InputProps={{
+                                                   startAdornment: <InputAdornment
+                                                       position="start">RS.</InputAdornment>,
+                                               }} variant="outlined" />
+
+                                    <TextField className={classes.fieldmargin}
+                                                color="primary"
+                                               label="Current Year's Income"
+                                               id="outlined-start-adornment"
+                                               InputProps={{
+                                                   startAdornment: <InputAdornment
+                                                       position="start">RS.</InputAdornment>,
+                                               }} variant="outlined" />
+
                                 </Grid>
                             </>
                         )}
+                            </GridContain>
+                        <Grid item xs={12}>
+                            <Fab size="small" color="secondary" aria-label="add" >
+                                <DeleteIcon />
+                            </Fab>
+                        </Grid>
                     </GridContain>
                 </form>
 

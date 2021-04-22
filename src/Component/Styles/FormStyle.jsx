@@ -34,6 +34,13 @@ const useStyles = makeStyles((theme) => ({
         border: "3px solid blue",
         margin: "50px auto"
     },
+    fieldmargin: {
+        marginTop: theme.spacing(5),
+        marginBottom: theme.spacing(5),
+    },
+    field: {
+        marginTop: theme.spacing(5),
+    }
 }));
 
 export default useStyles;

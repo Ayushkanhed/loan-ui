@@ -12,6 +12,7 @@ import useStyles from "../Styles/FormStyle";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
+import GridContain from "../Helpers/GridContain";
 
 const name = [
     { name: "Mr" },
@@ -33,8 +34,27 @@ const LoanRepay = [
 
 function LoanDetails() {
     const classes = useStyles();
-    const [bank, setbank] = useState();
-    return (
+    const [incomeList, setIncomeList] = useState(
+        [
+            { Date: new Date(), Amount:null, Info:"" }
+        ]);
+
+    function incomeChange(event, index) {
+        const {inputname, value} = event.target;
+        const list = [...incomeList];
+        list[index][inputname] = value;
+        setIncomeList(list);
+    }
+
+    const incomeRemove = (index) =>{
+        const list = [...incomeList];
+        list.splice(index, 1);
+        setIncomeList(list);
+    }
+    const incomeAdd = () => {
+        setIncomeList([...incomeList, { Date: new Date(), Amount:null, Info:""}])
+    }
+        return (
         <>
             <Container className={classes.containclass} maxWidth={"md"}>
                 <form className={classes.root} autoComplete="off" style={{ padding: "20px" }}>
@@ -50,63 +70,66 @@ function LoanDetails() {
 
                     {/* subject */}
                     <HeaderTitle name={"Previous Loan Details taken from BankName"} />
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
+                    <GridContain>
                         <Grid item xs={12}>
-                            <Fab size="small" color="primary" aria-label="add" >
+                            <Fab size="small" color="primary" aria-label="add" onClick={incomeAdd}>
                                 <AddIcon />
                             </Fab>
                         </Grid>
-                    </Grid>
+                    </GridContain>
 
                     {/*map number*/}
-                    <Grid container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="center" spacing={3}>
-                        <Grid item xs={12} md={3}>
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                id="date"
-                                label="Date of Borrowing Loan"
-                                type="date"
-                                defaultValue=""
-                                InputLabelProps={{
-                                    shrink: true,
-                                }} />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <TextField
-                                required
-                                fullWidth
-                                label="Loan Amount"
-                                id="outlined-start-adornment"
-                                // className={clsx(classes.margin, classes.textField)}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">₹</InputAdornment>,
-                                }}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={9}>
-                            <TextField
-                                fullWidth
-                                id="outlined-multiline-static"
-                                label="Loan Repayment Information"
-                                multiline
-                                rows={4}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Fab size="small" color="secondary" aria-label="add" >
-                                <DeleteIcon />
-                            </Fab>
-                        </Grid>
-                    </Grid>
+                    {incomeList.map( (field, idx) => {
+                        return(
+                            <GridContain>
+                                <Grid item xs={12} md={3}>
+                                    <TextField
+                                        fullWidth
+                                        variant="outlined"
+                                        id="date"
+                                        label="Date of Borrowing Loan"
+                                        type="date"
+                                        value={field.Date}
+                                        onChange={ (event => incomeChange(event, idx))}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }} />
+                                </Grid>
+                                <Grid item xs={12} md={3}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        label="Loan Amount"
+                                        id="outlined-start-adornment"
+                                        value={field.Amount}
+                                        onChange={ (event => incomeChange(event, idx))}
+                                        InputProps={{
+                                            startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                                        }}
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                                <Grid item xs={9}>
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-multiline-static"
+                                        label="Loan Repayment Information"
+                                        multiline
+                                        rows={4}
+                                        variant="outlined"
+                                        value={field.Info}
+                                        onChange={ (event => incomeChange(event, idx))}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Fab size="small" color="secondary" aria-label="add" onClick={(event => incomeRemove(idx))}>
+                                        <DeleteIcon />
+                                    </Fab>
+                                </Grid>
+                            </GridContain>
+                        )
+                    })}
+
 
 
                     <HeaderTitle name={"Loan Repayment Details"} />
