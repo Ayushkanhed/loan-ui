@@ -194,12 +194,59 @@ function PersonalDetails() {
     const numberaadhar9=(event)=>{
         setNumber({...number, aadhar9 : event.target.value})
     }
+
+
+    const [bankList, setBankList] = useState(
+        [
+            { BankName: "", BranchName: "", Years: null }
+            ]);
+
+    function handleChange(event, index) {
+        const {inputname, value} = event.target;
+        const list = [...bankList];
+        list[index][inputname] = value;
+        setBankList(list);
+    }
+
+    const handleRemove = (index) =>{
+        const list = [...bankList];
+        list.splice(index, 1);
+        setBankList(list);
+    }
+    const handleAdd = () =>{
+        setBankList([...bankList, {BankName: "", BranchName: "", Years: null}])
+    }
+
+    const [familyList, setFamilyList] = useState(
+        [
+            { Name: "", relation: "", Occupation: "", Age:null }
+        ]);
+
+    function familyChange(event, index) {
+        const {inputname, value} = event.target;
+        const list = [...familyList];
+        list[index][inputname] = value;
+        setFamilyList(list);
+    }
+
+    const familyRemove = (index) =>{
+        const list = [...familyList];
+        list.splice(index, 1);
+        setFamilyList(list);
+    }
+    const familyAdd = () =>{
+        setFamilyList([...familyList, {Name: "", relation: "", Occupation: "", Age: null}])
+    }
+
+
+
     return (
         <>
             <Container className={classes.containclass} maxWidth={"md"} >
                 <form className={classes.root} autoComplete="off" style={{ padding: "20px" }} >
 
                     {/* main heading */}
+
                     <Grid container
                         direction="row"
                         justify="center"
@@ -508,7 +555,6 @@ function PersonalDetails() {
                                     value={edu}
                                     onChange={educ}
                                 >
-
                                     {Education.map((mapname) =>
                                         <MenuItem value={mapname.name}>{mapname.name}</MenuItem>
                                     )}
@@ -613,37 +659,49 @@ function PersonalDetails() {
                     <GridContain>
 
                         {/*bank details*/}
+
                         <Grid item xs={2}>
-                            <Fab size="small" color="primary" aria-label="add" >
-                                <AddIcon />
+                            <Fab size="small" color="primary" aria-label="add"
+                                 onClick={handleAdd}>
+                                <AddIcon/>
                             </Fab>
+
                         </Grid>
                     </GridContain>
 
-                    <GridContain>
-                        {/*map from here*/}
+                    {bankList.map((field, idx) => {
+                        return (
+                            <div >
+                                <GridContain>
+                                    {/*map from here*/}
 
-                        <Grid item xs={12} md={3}>
-                            <TextField fullWidth color="primary" label="Bank Name" type="string" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <TextField fullWidth color="primary" label="Branch Name" type="string" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <TextField fullWidth type="numbers" color="primary" label="Years" type="string" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={2} md={1}>
-                            <Fab size="small" color="secondary" aria-label="add" >
-                                <EditIcon />
-                            </Fab>
-                        </Grid>
-                        <Grid item xs={2} md={2}>
-                            <Fab size="small" color="secondary" aria-label="add" >
-                                <DeleteIcon />
-                            </Fab>
-                        </Grid>
-                        {/*    map ends here*/}
-                    </GridContain>
+                                    <Grid item xs={12} md={3}>
+                                        <TextField fullWidth color="primary" label="Bank Name" type="string" variant="outlined"
+                                                   value={field.BankName}
+                                                   onChange={event => handleChange(event, idx)}/>
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <TextField fullWidth color="primary" label="Branch Name" type="string" variant="outlined"
+                                                   value={field.BranchName}
+                                                   onChange={event => handleChange(event, idx)}/>
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <TextField fullWidth type="numbers" color="primary" label="Years" type="string" variant="outlined"
+                                                   value={field.Years}
+                                                   onChange={event => handleChange(event, idx)}/>
+                                    </Grid>
+                                    <Grid item xs={2} md={2}>
+                                        <Fab size="small" color="secondary" aria-label="add" onClick={() => handleRemove(idx)}>
+                                            <DeleteIcon />
+                                        </Fab>
+                                    </Grid>
+                                    {/*    map ends here*/}
+                                </GridContain>
+                            </div>
+                        );
+                    })}
+
+
 
                     <HeaderTitle name={"Information of share holding of a Credit Union"} />
                     <GridContain>
@@ -662,39 +720,42 @@ function PersonalDetails() {
 
                         {/*bank details*/}
                         <Grid item xs={2}>
-                            <Fab size="small" color="primary" aria-label="add" >
+                            <Fab size="small" color="primary" aria-label="add" onClick={familyAdd}>
                                 <AddIcon />
                             </Fab>
                         </Grid>
                     </GridContain>
 
-                    <GridContain>
-                        {/*map from here*/}
-                        <Grid item xs={12} md={3}>
-                            <TextField fullWidth color="primary" label="Name" type="string" variant="outlined" />
-                        </Grid>
+                    {familyList.map ( (field, idx) =>{
+                        return(
+                            <GridContain>
+                                {/*map from here*/}
+                                <Grid item xs={12} md={3}>
+                                    <TextField fullWidth color="primary" label="Name" type="string" variant="outlined"
+                                    value={field.Name} onChange={ (event => familyChange(event, idx))}/>
+                                </Grid>
 
-                        <Grid item xs={12} md={3}>
-                            <TextField fullWidth type="numbers" color="primary" label="Relation" type="string" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <TextField fullWidth type="numbers" color="primary" label="Occupation" type="string" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} md={1}>
-                            <TextField fullWidth color="primary" label="Age" type="string" variant="outlined" />
-                        </Grid>
-                        <Grid item xs={2} md={1}>
-                            <Fab size="small" color="secondary" aria-label="add" >
-                                <EditIcon />
-                            </Fab>
-                        </Grid>
-                        <Grid item xs={2} md={1}>
-                            <Fab size="small" color="secondary" aria-label="add" >
-                                <DeleteIcon />
-                            </Fab>
-                        </Grid>
-                        {/*    map ends here*/}
-                    </GridContain>
+                                <Grid item xs={12} md={3}>
+                                    <TextField fullWidth type="numbers" color="primary" label="Relation" type="string" variant="outlined"
+                                               value={field.relation} onChange={ (event => familyChange(event, idx))}/>
+                                </Grid>
+                                <Grid item xs={12} md={3}>
+                                    <TextField fullWidth type="numbers" color="primary" label="Occupation" type="string" variant="outlined"
+                                               value={field.Occupation} onChange={ (event => familyChange(event, idx))}/>
+                                </Grid>
+                                <Grid item xs={12} md={2}>
+                                    <TextField fullWidth color="primary" label="Age" type="string" variant="outlined"
+                                               value={field.Age} onChange={(event => familyChange(event, idx))}/>
+                                </Grid>
+                                <Grid item xs={2} md={1}>
+                                    <Fab size="small" color="secondary" aria-label="add" onClick={() => familyRemove(idx)}>
+                                        <DeleteIcon />
+                                    </Fab>
+                                </Grid>
+                                {/*    map ends here*/}
+                            </GridContain>
+                        )
+                    })}
 
                 </form>
 

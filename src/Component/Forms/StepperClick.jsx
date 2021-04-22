@@ -122,7 +122,7 @@ export default function HorizontalNonLinearStepper() {
                     </Stepper>
 
                 </Grid>
-            <div>
+            <Container maxWidth={"md"}>
                 {allStepsCompleted() ? (
                     <div>
                         <Typography className={classes.instructions}>
@@ -158,7 +158,7 @@ export default function HorizontalNonLinearStepper() {
                         </div>
                     </div>
                 )}
-            </div>
+            </Container>
 
         </>
     );
